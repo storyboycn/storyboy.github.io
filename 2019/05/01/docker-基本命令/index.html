@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="删除所有未运行的docker容器 docker rm $(docker ps -a -q)  删除所有docker镜像&amp;amp;删除所有未打tag的镜像 docker rmi $(docker images -q | awk ‘/^/ {print $3}’)  删除所有镜像  docker rmi $(docker images -q)  根据格式删除所有的镜像  docker rm $(d">
+<meta name="description" content="删除所有未运行的docker容器 docker rm $(docker ps -a -q)  删除所有docker镜像&amp;amp;删除所有未打tag的镜像 docker rmi $(docker images -q | awk &amp;#39;/^&amp;lt;none&amp;gt;/ {print $3}&amp;#39;)  删除所有镜像  docker rmi $(docker images -q)  根据格式删除">
 <meta name="keywords" content="命令 docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker 的基本命令">
 <meta property="og:url" content="http://yoursite.com/2019/05/01/docker-基本命令/index.html">
 <meta property="og:site_name" content="伯牙绝弦">
-<meta property="og:description" content="删除所有未运行的docker容器 docker rm $(docker ps -a -q)  删除所有docker镜像&amp;amp;删除所有未打tag的镜像 docker rmi $(docker images -q | awk ‘/^/ {print $3}’)  删除所有镜像  docker rmi $(docker images -q)  根据格式删除所有的镜像  docker rm $(d">
+<meta property="og:description" content="删除所有未运行的docker容器 docker rm $(docker ps -a -q)  删除所有docker镜像&amp;amp;删除所有未打tag的镜像 docker rmi $(docker images -q | awk &amp;#39;/^&amp;lt;none&amp;gt;/ {print $3}&amp;#39;)  删除所有镜像  docker rmi $(docker images -q)  根据格式删除">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-01T06:59:18.390Z">
+<meta property="og:updated_time" content="2019-05-01T07:24:59.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker 的基本命令">
-<meta name="twitter:description" content="删除所有未运行的docker容器 docker rm $(docker ps -a -q)  删除所有docker镜像&amp;amp;删除所有未打tag的镜像 docker rmi $(docker images -q | awk ‘/^/ {print $3}’)  删除所有镜像  docker rmi $(docker images -q)  根据格式删除所有的镜像  docker rm $(d">
+<meta name="twitter:description" content="删除所有未运行的docker容器 docker rm $(docker ps -a -q)  删除所有docker镜像&amp;amp;删除所有未打tag的镜像 docker rmi $(docker images -q | awk &amp;#39;/^&amp;lt;none&amp;gt;/ {print $3}&amp;#39;)  删除所有镜像  docker rmi $(docker images -q)  根据格式删除">
 
 
 
@@ -385,7 +385,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  163
+                  179
                 </span>
               
 
@@ -425,31 +425,31 @@
         <hr>
 <ul>
 <li><p>删除所有未运行的docker容器</p>
-<p>docker rm $(docker ps -a -q)</p>
+<p><code>docker rm $(docker ps -a -q)</code></p>
 </li>
 <li><p>删除所有docker镜像&amp;删除所有未打tag的镜像</p>
-<p>docker rmi $(docker images -q | awk ‘/^<none>/ {print $3}’)</none></p>
+<p><code>docker rmi $(docker images -q | awk &#39;/^&lt;none&gt;/ {print $3}&#39;)</code></p>
 </li>
 <li><p>删除所有镜像</p>
-<p> docker rmi $(docker images -q)</p>
+<p> <code>docker rmi $(docker images -q)</code></p>
 </li>
 <li><p>根据格式删除所有的镜像</p>
-<p> docker rm $(docker ps -qf status=exited)</p>
+<p><code>docker rm $(docker ps -qf status=exited)</code></p>
 </li>
 <li><p>删除停止的容器</p>
-<p> docker rm $(docker ps -all -q -f status=exited)</p>
+<p> <code>docker rm $(docker ps -all -q -f status=exited)</code></p>
 </li>
 <li><p>删除没有使用过的镜像</p>
-<p> docker  rmi  $(docker images | grep “<none>“ | awk “{print \$3}”)</none></p>
+<p><code>docker  rmi  $(docker images | grep &quot;&lt;none&gt;&quot; | awk &quot;{print \$3}&quot;)</code></p>
 </li>
 <li><p>批量删除镜像</p>
-<p> docker images | awk  ‘{print $3}’ | xargs docker rmi </p>
+<p> <code>docker images | awk  &#39;{print $3}&#39; | xargs docker rmi</code></p>
 </li>
 <li><p>批量删除容器</p>
-<p> docker ps -a | awk ‘{print $1}’ | xargs docker rm </p>
+<p><code>docker ps -a | awk &#39;{print $1}&#39; | xargs docker rm</code></p>
 </li>
 <li><p>以特权模式运行容器（systemct）</p>
-<p> docker run -d -name centos7 –privileged=true centos:7 /usr/sbin/init<br> docker exec -it centos7 /bin/bash</p>
+<p><code>docker run -d -name centos7 --privileged=true centos:7 /usr/sbin/init</code><br> <code>docker exec -it centos7 /bin/bash</code></p>
 </li>
 </ul>
 
@@ -691,7 +691,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">163</span>
+    <span title="Site words total count">179</span>
   
   
   -->
@@ -724,7 +724,7 @@ var jiathis_config={
 
   <div class="powered-by"></div>
 
-  <span class="post-count">博客全站共163字</span>
+  <span class="post-count">博客全站共179字</span>
 
 
         

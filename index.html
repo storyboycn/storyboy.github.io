@@ -386,7 +386,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  163
+                  179
                 </span>
               
 
@@ -431,10 +431,7 @@
 docker rm $(docker ps -a -q)
 
 删除所有docker镜像&amp;删除所有未打tag的镜像
-docker rmi $(docker images -q | awk ‘/^/ {print $3}’)
-
-删除所有镜像
- docker r
+docker rmi $(docker images -q | awk &#39;/^&lt;none&gt;/ {print $3}&#39
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -639,7 +636,7 @@ docker rmi $(docker images -q | awk ‘/^/ {print $3}’)
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">163</span>
+    <span title="Site words total count">179</span>
   
   
   -->
@@ -672,7 +669,7 @@ docker rmi $(docker images -q | awk ‘/^/ {print $3}’)
 
   <div class="powered-by"></div>
 
-  <span class="post-count">博客全站共163字</span>
+  <span class="post-count">博客全站共179字</span>
 
 
         

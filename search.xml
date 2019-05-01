@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[docker 的基本命令]]></title>
     <url>%2F2019%2F05%2F01%2Fdocker-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%2F</url>
-    <content type="text"><![CDATA[删除所有未运行的docker容器 docker rm $(docker ps -a -q) 删除所有docker镜像&amp;删除所有未打tag的镜像 docker rmi $(docker images -q | awk ‘/^/ {print $3}’) 删除所有镜像 docker rmi $(docker images -q) 根据格式删除所有的镜像 docker rm $(docker ps -qf status=exited) 删除停止的容器 docker rm $(docker ps -all -q -f status=exited) 删除没有使用过的镜像 docker rmi $(docker images | grep ““ | awk “{print \$3}”) 批量删除镜像 docker images | awk ‘{print $3}’ | xargs docker rmi 批量删除容器 docker ps -a | awk ‘{print $1}’ | xargs docker rm 以特权模式运行容器（systemct） docker run -d -name centos7 –privileged=true centos:7 /usr/sbin/init docker exec -it centos7 /bin/bash]]></content>
+    <content type="text"><![CDATA[删除所有未运行的docker容器 docker rm $(docker ps -a -q) 删除所有docker镜像&amp;删除所有未打tag的镜像 docker rmi $(docker images -q | awk &#39;/^&lt;none&gt;/ {print $3}&#39;) 删除所有镜像 docker rmi $(docker images -q) 根据格式删除所有的镜像 docker rm $(docker ps -qf status=exited) 删除停止的容器 docker rm $(docker ps -all -q -f status=exited) 删除没有使用过的镜像 docker rmi $(docker images | grep &quot;&lt;none&gt;&quot; | awk &quot;{print \$3}&quot;) 批量删除镜像 docker images | awk &#39;{print $3}&#39; | xargs docker rmi 批量删除容器 docker ps -a | awk &#39;{print $1}&#39; | xargs docker rm 以特权模式运行容器（systemct） docker run -d -name centos7 --privileged=true centos:7 /usr/sbin/init docker exec -it centos7 /bin/bash]]></content>
       <categories>
         <category>docker</category>
       </categories>

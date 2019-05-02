@@ -76,8 +76,6 @@
 
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="伯牙绝弦" type="application/atom+xml">
 
@@ -86,17 +84,17 @@
 
 
 
-<meta name="description" content="To Be a Batter Me">
+<meta name="description" content="今天是2019年5月2日">
 <meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+<meta property="og:title" content="札记">
+<meta property="og:url" content="http://yoursite.com/commonweal/index.html">
 <meta property="og:site_name" content="伯牙绝弦">
-<meta property="og:description" content="To Be a Batter Me">
+<meta property="og:description" content="今天是2019年5月2日">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-02T04:51:51.010Z">
+<meta property="og:updated_time" content="2019-05-02T05:38:54.649Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分类">
-<meta name="twitter:description" content="To Be a Batter Me">
+<meta name="twitter:title" content="札记">
+<meta name="twitter:description" content="今天是2019年5月2日">
 
 
 
@@ -126,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/">
+  <link rel="canonical" href="http://yoursite.com/commonweal/">
 
 
 
 
 
-  <title>分类 | 伯牙绝弦</title>
+  <title>札记 | 伯牙绝弦</title>
   
 
 
@@ -324,7 +322,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">分类</h1>
+	<h1 class="post-title" itemprop="name headline">札记</h1>
 
 
 
@@ -336,14 +334,8 @@
       <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                目前共计 1 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
+          <p>今天是2019年5月2日</p>
+
         
       </div>
       
@@ -361,9 +353,15 @@
 
 
           
-     <div id="gitalk-container"></div>
 
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDAzMy8yMDU2OA"></div>
+    </div>
 
+  
+  
+  
 
         </div>
         
@@ -705,6 +703,17 @@
 
 
   
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
 
 
 
@@ -716,6 +725,21 @@
 
 
 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'a00bee0250e5c3541789',
+          clientSecret: '608269b1a06de634c471070d0ba62e3034d565af',
+          repo: 'storyboycn.github.io',
+          owner: 'storyboycn',
+          admin: ['storyboycn'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
   
 

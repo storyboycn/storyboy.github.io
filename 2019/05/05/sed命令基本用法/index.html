@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="常用命令,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="伯牙绝弦" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="sed在文件中查询文本的基本方法：n和p命令一起使用表示只打印那些发生替换的行  1.使用行号，可以是一个简单数字，或是一个行号范围符号 |作用  | :-: |x     |             x为行号|x,y      |          表示行号从x到y/pattern      |     表示包含模式的行/pattern /pattern | 表示包含两个模式的行pattern/">
+<meta name="keywords" content="常用命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sed基本用法">
+<meta property="og:url" content="http://yoursite.com/2019/05/05/sed命令基本用法/index.html">
+<meta property="og:site_name" content="伯牙绝弦">
+<meta property="og:description" content="sed在文件中查询文本的基本方法：n和p命令一起使用表示只打印那些发生替换的行  1.使用行号，可以是一个简单数字，或是一个行号范围符号 |作用  | :-: |x     |             x为行号|x,y      |          表示行号从x到y/pattern      |     表示包含模式的行/pattern /pattern | 表示包含两个模式的行pattern/">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-05T11:46:51.378Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sed基本用法">
+<meta name="twitter:description" content="sed在文件中查询文本的基本方法：n和p命令一起使用表示只打印那些发生替换的行  1.使用行号，可以是一个简单数字，或是一个行号范围符号 |作用  | :-: |x     |             x为行号|x,y      |          表示行号从x到y/pattern      |     表示包含模式的行/pattern /pattern | 表示包含两个模式的行pattern/">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/05/sed命令基本用法/">
+
+
+
+
+
+  <title>sed基本用法 | 伯牙绝弦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">伯牙绝弦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">伯牙鼓琴，志在高山</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-相册">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-camera"></i> <br>
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-札记">
+          <a href="/heartbeat/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            札记
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/05/sed命令基本用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yvan Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="伯牙绝弦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">sed基本用法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-05T16:08:33+08:00">
+                2019-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/命令/" itemprop="url" rel="index">
+                    <span itemprop="name">命令</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  24
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="sed在文件中查询文本的基本方法："><a href="#sed在文件中查询文本的基本方法：" class="headerlink" title="sed在文件中查询文本的基本方法："></a>sed在文件中查询文本的基本方法：</h3><p>n和p命令一起使用表示只打印那些发生替换的行</p>
+<hr>
+<p>1.使用行号，可以是一个简单数字，或是一个行号范围<br>符号 |作用</p>
+<ul>
+<li>| :-: |<br>x     |             x为行号|<br>x,y      |          表示行号从x到y<br>/pattern      |     表示包含模式的行<br>/pattern /pattern | 表示包含两个模式的行<br>pattern/,x       |  在给定行号上查询包含模式的行<br>x，/pattern      |  通过行号和模式查询匹配的行<br>x,y!             |  查询包含指定行号x和y的行<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# cat data</span><br><span class="line">This is the header  data line</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>打印文中的第几行，第行会打印两遍，sed默认打印文中的所有行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;2p&apos; data</span><br><span class="line">This is the header  data line</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br></pre></td></tr></table></figure></p>
+<p>sed用-n选项，表示只打印匹配的行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &apos;2p&apos; data</span><br><span class="line">This is the first  data line</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &apos;1,3p&apos; data  表示打印文中第一行到第三行</span><br><span class="line">This is the header  data line</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the second  data line</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &apos;/second/p&apos; data  表示打印文件中匹配second的行</span><br><span class="line">This is the second  data line</span><br></pre></td></tr></table></figure>
+<p>打印文中从匹配到/pattern的行到第几行的内容，如果/pattern所处的行在第几行之后，则表示只打印匹配/pattern的行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &apos;/second/,4p&apos; data</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;/last/,2p&apos; data</span><br><span class="line">This is the last data line</span><br><span class="line">[root@10-46-143-76 ~]#</span><br></pre></td></tr></table></figure></p>
+<p>打印从第几行开始匹配到出现/pattern字符的行，pattern字符行也打印<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &apos;2,/last/p&apos; data</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;3,/last/p&apos; data</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;3,/this/p&apos; data</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;2,/this/p&apos; data</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br></pre></td></tr></table></figure></p>
+<p>打印从第一次匹配到/pattern1的行，到第一次出现/pattern2的行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &apos;/first/,/last/p&apos; data</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;/first/,/data/p&apos; data</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the second  data line</span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;/data/,/last/p&apos; data</span><br><span class="line">This is the header  data line</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;/first/,/last/p&apos; data</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;2,/last/p&apos; data</span><br><span class="line">This is the first  data line</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br></pre></td></tr></table></figure></p>
+<p>打印文中第几行到第几行的内容，且打印行号，当用到sed的不同编辑命令时候，用{},且不通编辑命令之间用分号，用！表示取反<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &apos;1,4&#123;=;p&#125;&apos; data</span><br><span class="line">1</span><br><span class="line">This is the header  data line</span><br><span class="line">2</span><br><span class="line">This is the first  data line</span><br><span class="line">3</span><br><span class="line">This is the second  data line</span><br><span class="line">4</span><br><span class="line">This is the last data line</span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;1,2!&#123;=;p&#125;&apos; data</span><br><span class="line">3</span><br><span class="line">This is the second  data line</span><br><span class="line">4</span><br><span class="line">This is the last data line</span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;1,2!p&apos; data</span><br><span class="line">This is the second  data line</span><br><span class="line">This is the last data line</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>2.使用正则表达式、扩展正则表达式（必须结合-r选项）<br>符号 |作用</p>
+<ul>
+<li>| :-: |<br>^ | 锚点行首的符合条件的内容，用法格式”^pattern” |<br>\$ | 锚点行首的符合条件的内容，用法格式”pattern$” |<br>^\$|空白行|<br>.|匹配任意单个字符|<br><em>|匹配紧挨在前面的字符任意次(0,1,多次)|<br>.</em>|匹配任意长度的任意字符|<br>?|匹配紧挨在前面的字符0次或1次|<br>{m,n}|匹配其前面的字符至少m次，至多n次|<br>{m,}|匹配其前面的字符至少m次|<br>{m}|精确匹配前面的m次{0,n}:0到n次|<br>&lt;|锚点词首—-相当于 \b，用法格式：\&lt;pattern<blockquote>
+<p>|锚点词尾，用法格式:>pattern|<br>[]|匹配指定范围内的任意单个字符|<br>[^]|匹配指定范围外的任意单个字符|\<br>[:digit:]|所有数字, 相当于0-9， [0-9]—&gt; [[:digit:]]|<br>[:lower:]|所有的小写字母|<br>[:upper:]|所有的大写字母|<br>[:alpha:]|所有的字母<br>[:alnum:]|相当于0-9a-zA-Z<br>[:space:]|空白字符<br>[:punct:]|所有标点符号</p>
+</blockquote>
+</li>
+</ul>
+<p>sed ‘5q’ /etc/passwd   #打印前5行 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;5q&apos; /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">bin:x:1:1:bin:/bin:/sbin/nologin</span><br><span class="line">daemon:x:2:2:daemon:/sbin:/sbin/nologin</span><br><span class="line">adm:x:3:4:adm:/var/adm:/sbin/nologin</span><br><span class="line">lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin</span><br></pre></td></tr></table></figure>
+<p>sed-n ‘/r*t/p’ /etc/passwd #打印匹配r有0个或者多个，后接一个t字符的行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &quot;/r*t/p&quot; /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown</span><br><span class="line">halt:x:7:0:halt:/sbin:/sbin/halt</span><br><span class="line">operator:x:11:0:operator:/root:/sbin/nologin</span><br><span class="line">ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin</span><br><span class="line">systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin</span><br><span class="line">dbus:x:81:81:System message bus:/:/sbin/nologin</span><br><span class="line">polkitd:x:999:998:User for polkitd:/:/sbin/nologin</span><br><span class="line">libstoragemgmt:x:998:997:daemon account for libstoragemgmt:/var/run/lsm:/sbin/nologin</span><br><span class="line">abrt:x:173:173::/etc/abrt:/sbin/nologin</span><br><span class="line">sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin</span><br><span class="line">postfix:x:89:89::/var/spool/postfix:/sbin/nologin</span><br><span class="line">ntp:x:38:38::/etc/ntp:/sbin/nologin</span><br><span class="line">tcpdump:x:72:72::/:/sbin/nologin</span><br><span class="line">dockerroot:x:996:993:Docker User:/var/lib/docker:/sbin/nologin</span><br></pre></td></tr></table></figure></p>
+<p>sed -n ‘/.r.*/p’ /etc/passwd #打印匹配有r的行并且r后面跟任意字符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &apos;/.r.*/p&apos; /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">adm:x:3:4:adm:/var/adm:/sbin/nologin</span><br><span class="line">lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin</span><br><span class="line">mail:x:8:12:mail:/var/spool/mail:/sbin/nologin</span><br><span class="line">operator:x:11:0:operator:/root:/sbin/nologin</span><br><span class="line">games:x:12:100:games:/usr/games:/sbin/nologin</span><br><span class="line">ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin</span><br><span class="line">systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin</span><br><span class="line">polkitd:x:999:998:User for polkitd:/:/sbin/nologin</span><br><span class="line">libstoragemgmt:x:998:997:daemon account for libstoragemgmt:/var/run/lsm:/sbin/nologin</span><br><span class="line">abrt:x:173:173::/etc/abrt:/sbin/nologin</span><br><span class="line">rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin</span><br><span class="line">sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin</span><br><span class="line">postfix:x:89:89::/var/spool/postfix:/sbin/nologin</span><br><span class="line">chrony:x:997:995::/var/lib/chrony:/sbin/nologin</span><br><span class="line">dockerroot:x:996:993:Docker User:/var/lib/docker:/sbin/nologin</span><br></pre></td></tr></table></figure></p>
+<p>sed -n ‘/o*/p’ /etc/passwd#打印o字符重复任意次<br>sed -n ‘/o{1,}/p’ /etc/passwd#打印o字重复出现一次以上<br>sed -n ‘/o{1,3}/p’ /etc/passwd#打印o字重复出现一次到三次之间以上</p>
+<p>sed的编辑命令(sed command)：<br>参数 | 作用 | </p>
+<ul>
+<li>| :-: |<br>p | 打印匹配行（和-n选项一起合用）|<br>= | 显示文件行号|<br>a\ | 在定位行号后附加新文本信息|<br>i\ | 在定位行号后插入新文本信息|<br>d | 删除定位行|<br>c\ | 用新文本替换定位文本|<br>w filename |写文本到一个文件，类似输出重定向 &gt;|<br>r filename | 从另一个文件中读文本，类似输入重定向 &lt;|<br>s | 使用替换模式替换相应模式|<br>q | 第一个模式匹配完成后退出或立即退出|<br>l | 显示与八进制ACSII代码等价的控制符|<br>{} | 在定位行执行的命令组，用分号隔开|<br>n |从另一个文件中读文本下一行，并从下一条命令而不是第一条命令开始对其的处理|<br>N | 在数据流中添加下一行以创建用于处理的多行组|<br>g | 将模式2粘贴到/pattern n/|<br>y | 传送字符，替换单个字符|<br>对文件的操作无非就是”增删改查“，怎样用sed命令实现对文件的”增删改查“，玩转sed是写自动化脚本必须的基础之一</li>
+</ul>
+<p>打印出以#开头的行，然后用！进行反选，则表示过滤掉以#开头的行，不会过滤掉空格<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@10-46-143-76 ~]# sed -n &apos;/^#/!p&apos; /etc/my.cnf</span><br><span class="line">[mysqld]</span><br><span class="line">datadir=/var/lib/mysql</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line">symbolic-links=0</span><br><span class="line"></span><br><span class="line">[mysqld_safe]</span><br><span class="line">log-error=/var/log/mariadb/mariadb.log</span><br><span class="line">pid-file=/var/run/mariadb/mariadb.pid</span><br><span class="line"></span><br><span class="line">!includedir /etc/my.cnf.d</span><br></pre></td></tr></table></figure></p>
+<p>匹配以#开头的行，进行取反，则表示打印出非#开头的行，然后其结果再对空格开头进行取反；则表示过滤掉以#开头的行和空白行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &apos;/^#/!&#123;/^$/!p&#125;&apos; /etc/my.cnf</span><br><span class="line">[mysqld]</span><br><span class="line">datadir=/var/lib/mysql</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line">symbolic-links=0</span><br><span class="line">[mysqld_safe]</span><br><span class="line">log-error=/var/log/mariadb/mariadb.log</span><br><span class="line">pid-file=/var/run/mariadb/mariadb.pid</span><br><span class="line">!includedir /etc/my.cnf.d</span><br></pre></td></tr></table></figure></p>
+<p>sed支持对耽搁文件实现不同的操作，每个操作用-e参数，删除匹配以#开始的行和空白行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed  -e &apos;/^#/d&apos; -e &apos;/^$/d&apos; my.cnf </span><br><span class="line">[mysqld]</span><br><span class="line">datadir=/var/lib/mysql</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line">symbolic-links=0</span><br><span class="line">[mysqld_safe]</span><br><span class="line">log-error=/var/log/mariadb/mariadb.log</span><br><span class="line">pid-file=/var/run/mariadb/mariadb.pid</span><br><span class="line">!includedir /etc/my.cnf.d</span><br></pre></td></tr></table></figure></p>
+<p>打印第一行到匹配到adm的行，adm在文件的第四行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -n &apos;1,/adm/&#123;=;p&#125;&apos; /etc/passwd</span><br><span class="line">1</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">2</span><br><span class="line">bin:x:1:1:bin:/bin:/sbin/nologin</span><br><span class="line">3</span><br><span class="line">daemon:x:2:2:daemon:/sbin:/sbin/nologin</span><br><span class="line">4</span><br><span class="line">adm:x:3:4:adm:/var/adm:/sbin/nologin</span><br></pre></td></tr></table></figure></p>
+<p><strong>sed命令实现对文件内容的添加：(对源文件添加的话就用-i参数):</strong><br>文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hello world</span><br><span class="line">hello linux</span><br><span class="line">how are you</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br></pre></td></tr></table></figure></p>
+<p>在匹配world字符的行，行首添加Li这个字符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;/world/s/^/Li /&apos; myfile</span><br><span class="line">Li hello world</span><br><span class="line">hello linux</span><br><span class="line">how are you</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br></pre></td></tr></table></figure></p>
+<p>在匹配linux的行，在linux这个单词前面添加jie<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;s/linux/jie &amp;/&apos; myfile </span><br><span class="line">hello world</span><br><span class="line">hello jie linux</span><br><span class="line">how are you</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br></pre></td></tr></table></figure></p>
+<p>在匹配linux字符串的行，在linux这个字符的后面添加jie<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;s/linux/&amp; jie/&apos; myfile </span><br><span class="line">hello world</span><br><span class="line">hello linux jie</span><br><span class="line">how are you</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br></pre></td></tr></table></figure></p>
+<p>在匹配you字符的行的行尾添加Li字符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;/you/s/$/ Li/&apos; myfile </span><br><span class="line">hello world</span><br><span class="line">hello linux</span><br><span class="line">how are you Li</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you Li</span><br></pre></td></tr></table></figure></p>
+<p>在匹配are字符的行的前面添加一行nihao<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;/are/i nihao&apos; myfile</span><br><span class="line">hello world</span><br><span class="line">hello linux</span><br><span class="line">nihao</span><br><span class="line">how are you</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;/are/i \nihao&apos; myfile</span><br><span class="line">hello world</span><br><span class="line">hello linux</span><br><span class="line">nihao</span><br><span class="line">how are you</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br></pre></td></tr></table></figure>
+<p><strong>注意，这个不是在匹配are字符的行添加nihao</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hello world</span><br><span class="line">hello linux</span><br><span class="line">/nihao</span><br><span class="line">how are you</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br></pre></td></tr></table></figure></p>
+<p>在匹配are字符的行的行后，添加nihao这行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;/are/a nihao&apos;  myfile </span><br><span class="line">hello world</span><br><span class="line">hello linux</span><br><span class="line">how are you</span><br><span class="line">nihao</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br></pre></td></tr></table></figure></p>
+<p>[root@10-46-143-76 ~]# sed ‘/are/a \nihao’  myfile<br>hello world<br>hello linux<br>how are you<br>nihao<br>i am fine<br>thanks, and you<br>添加多行要用\n来转义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;/are/a \nihao\wo hen hao&apos;  myfile </span><br><span class="line">hello world</span><br><span class="line">hello linux</span><br><span class="line">how are you</span><br><span class="line">nihaowo hen hao</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br><span class="line">[root@10-46-143-76 ~]# sed &apos;/are/a \nihao\nwo hen hao&apos;  myfile </span><br><span class="line">hello world</span><br><span class="line">hello linux</span><br><span class="line">how are you</span><br><span class="line">nihao</span><br><span class="line">wo hen hao</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br><span class="line">[root@10-46-143-76 ~]#</span><br></pre></td></tr></table></figure></p>
+<p>在每行的开头添加Start<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;s/^/Start /&apos; myfile </span><br><span class="line">Start hello world</span><br><span class="line">Start hello linux</span><br><span class="line">Start how are you</span><br><span class="line">Start i am fine</span><br><span class="line">Start thanks, and you</span><br></pre></td></tr></table></figure></p>
+<p>在每行的行尾添加end<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;s/$/ end /&apos; myfile </span><br><span class="line">hello world end </span><br><span class="line">hello linux end </span><br><span class="line">how are you end </span><br><span class="line">i am fine end </span><br><span class="line">thanks, and you end</span><br></pre></td></tr></table></figure></p>
+<p>指定1至三行，在行首添加#号，一般用于在配置文件中注释某行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># hello world</span><br><span class="line"># hello linux</span><br><span class="line"># how are you</span><br><span class="line">i am fine</span><br><span class="line">thanks, and you</span><br></pre></td></tr></table></figure></p>
+<p>在匹配fine这行的前面添加very字符，后面接p参数表上添加两行同样的，不加p参数只添加一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed &apos;s/fine/very &amp;/p&apos; myfile </span><br><span class="line">hello world</span><br><span class="line">hello linux</span><br><span class="line">how are you</span><br><span class="line">i am very fine</span><br><span class="line">i am very fine</span><br><span class="line">thanks, and you</span><br><span class="line">[root@10-46-143-76 ~]# sed &apos;s/fine/very &amp;/&apos; myfile </span><br><span class="line">hello world</span><br><span class="line">hello linux</span><br><span class="line">how are you</span><br><span class="line">i am very fine</span><br><span class="line">thanks, and you</span><br></pre></td></tr></table></figure></p>
+<p>sed命令不加-i参数是不会对文件直接进行操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -i &apos;s/$/ end/&apos; myfile </span><br><span class="line">[root@10-46-143-76 ~]# cat myfile</span><br><span class="line">hello world end</span><br><span class="line">hello linux end</span><br><span class="line">how are you end</span><br><span class="line">i am fine end</span><br><span class="line">thanks, and you end</span><br></pre></td></tr></table></figure>
+<p>@表示地址定界符，一般由三个组成，定界符可以是/、$、#、等其他特殊字符，<br>此命令表示，匹配hello的行，把end换成tail<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -i &apos;/hello/s@end@tail@&apos; myfile</span><br><span class="line">[root@10-46-143-76 ~]# cat myfile </span><br><span class="line">hello world tail</span><br><span class="line">hello linux tail</span><br><span class="line">how are you end</span><br><span class="line">i am fine end</span><br><span class="line">thanks, and you end</span><br></pre></td></tr></table></figure></p>
+<p>在匹配tail的行尾，添加and tail 字符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -i &apos;s/tail/and tail/&apos;  myfile </span><br><span class="line">[root@10-46-143-76 ~]# cat myfile </span><br><span class="line">hello world and tail</span><br><span class="line">hello linux and tail</span><br><span class="line">how are you end</span><br><span class="line">i am fine end</span><br><span class="line">thanks, and you end</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -i &apos;/tail/s/$/and tail/&apos;  myfile </span><br><span class="line">[root@10-46-143-76 ~]# cat myfile </span><br><span class="line">hello world and tailand tail</span><br><span class="line">hello linux and tailand tail</span><br><span class="line">how are you end</span><br><span class="line">i am fine end</span><br><span class="line">thanks, and you end</span><br></pre></td></tr></table></figure>
+<p>匹配tail的行，把tail换成end,默认是修改行中第一次出现的tail<br>后面跟g是修改全文只要出现tail的就替换成end，后面接数字子后再接g，表示匹配的行中，第几次出现，就替换。2g表示替换行中第二次出现的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@10-46-143-76 ~]# sed -e &apos;/and/s/and/or/2g&apos;  myfile</span><br><span class="line">hello world and tail or tail</span><br><span class="line">hello linux and tail or tail</span><br><span class="line">how are you end</span><br><span class="line">i am fine end</span><br><span class="line">thanks, and you end</span><br><span class="line">[root@10-46-143-76 ~]#</span><br></pre></td></tr></table></figure></p>
+<p><strong>sed命令实现对文件内容的删除：(对源文件直接删除用-i参数):</strong><br><code>sed &#39;/^#/d&#39; myfile</code>   删除以#开头的行<br><code>sed &#39;/^#/!d&#39;  myfile</code>  删除以非#开头的行，即显示以#开头的行<br><code>sed  &#39;1d&#39;  myfile</code>   删除文件的第一行，即首行<br><code>sed &#39;$d&#39; myfile</code>       删除文件的最后一行，即尾行<br><code>sed  &#39;2,4d&#39; myflie</code>  删除文件指定的行<br><code>sed &#39;/thanks/d&#39; myfile</code>  删除匹配thanks的行<br><code>sed &#39;/o/d&#39; myfile</code>删除匹配o这个字符的行，文件中含有o字符的行都删除<br><code>sed &#39;/\&lt;you\&gt;/d&#39; myfile</code> 删除文件中含有you这个单词的行，\&lt;>作单词牟定<br><strong>-i参数，直接对文件进行操作，当需要删除多种不同的匹配模式时，可以-e参数，此sed命令表示删除匹配sed字符的行和匹配以#开头的行</strong><br><code>sed -i -e &#39;/sed/d&#39; -e/^#/d</code> myfile</p>
+<p><code>sed -i &#39;/i/d&#39;  myfile</code> 删除匹配i字符的行<br><code>sed -i &#39;/End$/d&#39;  myfile</code> 删除以end结尾的行</p>
+<p><strong>重点：sed命令实现对文件内容的替换（替换是在shell自动化脚本中用到最多的操作）</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">#================源文件里面的内容===============================  </span><br><span class="line">[root@jie1 ~]# cat test  </span><br><span class="line">anonymous_enable=YES  </span><br><span class="line">write_enable=YES  </span><br><span class="line">local_umask=022  </span><br><span class="line">xferlog_enable=YES  </span><br><span class="line">connect_from_port_20=YES  </span><br><span class="line">root:x:0:0:root:/root:/bin/bash  </span><br><span class="line">bin:x:1:1:bin:/bin:/sbin/nologin  </span><br><span class="line">daemon:x:2:2:daemon:/sbin:/sbin/nologin  </span><br><span class="line">adm:x:3:4:adm:/var/adm:/sbin/nologin  </span><br><span class="line">lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin  </span><br><span class="line">DEVICE=&quot;eth0&quot;  </span><br><span class="line">BOOTPROTO=&quot;static&quot;  </span><br><span class="line">HWADDR=&quot;00:0C:29:90:79:78&quot;  </span><br><span class="line">ONBOOT=&quot;yes&quot;  </span><br><span class="line">IPADDR=172.16.22.1  </span><br><span class="line">NETMASK=255.255.0.0  </span><br><span class="line">#======================================================================  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;/DEVICE/c\Ethernet&apos; test   </span><br><span class="line">        #匹配DEVICE的行，替换成Ethernet这行  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;s/static/dhcp/&apos; test       </span><br><span class="line">        #把static替换成dhcp(/,@,#都是前面所说的地址定界符)  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;/IPADDR/s@22\.1@10.12@&apos; test  </span><br><span class="line">        #匹配IPADDR的行，把22.1替换成10.12由于.号有特殊意义所有需要转义  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;/connect/s#YES#NO#&apos; test   </span><br><span class="line">        #匹配connect的行，把YES替换成NO  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;s/bin/tom/2g&apos; test         </span><br><span class="line">        #把所有匹配到bin的行中第二次及第二次之后出现bin替换成tom  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;s/daemon/jerry/2p&apos; test    </span><br><span class="line">        #把所有匹配到bin的行中第二次出现的daemon替换成jerry，并在生产与匹配行同样的行  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;s/adm/boss/2&apos; test         </span><br><span class="line">        #把所有匹配到adm的行中仅仅只是第二次出现的adm替换成boss  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;/root/&#123;s/bash/nologin/;s/0/1/g&#125;&apos; test  </span><br><span class="line">        #匹配root的行，把bash替换成nologin，且把0替换成1  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;s/root/(&amp;)/g&apos; test                   </span><br><span class="line">        #把root用括号括起来，&amp;表示引用前面匹配的字符  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;s/BOOTPROTO/#BOOTPROTO/&apos; test        </span><br><span class="line">        #匹配BOOTPROTO替换成#BOOTPROTO，在配置文件中一般用于注释某行  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;s/ONBOOT/#&amp;/&apos; test                   </span><br><span class="line">        #匹配ONBOOT的行的前面添加#号，在配置文件中也表示注释某行  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;/ONBOOT/s/#//&apos; test                  </span><br><span class="line">        #匹配ONBOOT的行，把#替换成空，即去掉#号，也一般用作去掉#注释  </span><br><span class="line">#================执行以上sed命令之后文件显示的内容====================  </span><br><span class="line">[root@jie1 ~]# cat test  </span><br><span class="line">anonymous_enable=YES  </span><br><span class="line">write_enable=YES  </span><br><span class="line">local_umask=022  </span><br><span class="line">xferlog_enable=YES  </span><br><span class="line">connect_from_port_20=NO  </span><br><span class="line">(root):x:1:1:(root):/(root):/bin/nologin  </span><br><span class="line">bin:x:1:1:tom:/tom:/stom/nologin  </span><br><span class="line">daemon:x:2:2:jerry:/sbin:/stom/nologin  </span><br><span class="line">daemon:x:2:2:jerry:/sbin:/stom/nologin  </span><br><span class="line">adm:x:3:4:boss:/var/adm:/sbin/nologin  </span><br><span class="line">lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin  </span><br><span class="line">Ethernet  </span><br><span class="line">#BOOTPROTO=&quot;dhcp&quot;  </span><br><span class="line">HWADDR=&quot;00:0C:29:90:79:78&quot;  </span><br><span class="line">ONBOOT=&quot;yes&quot;  </span><br><span class="line">IPADDR=172.16.10.12  </span><br><span class="line">NETMASK=255.255.0.0</span><br></pre></td></tr></table></figure></p>
+<p><strong><em> sed引用变量：（在自动化shell脚本 中也经常会使用到变量）</em></strong></p>
+<p>第一种当sed命令里面没有默认的变量时可以把单引号改成双引号；</p>
+<p>第二种当sed命令里面有默认的变量时，那自己定义的变量需要加单引号，且sed里面的语句必须用单引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@jie1 ~]# cat &gt;&gt; myfile &lt;&lt; EOF  </span><br><span class="line">&gt; hello world  </span><br><span class="line">&gt; i am jie  </span><br><span class="line">&gt; how are you  </span><br><span class="line">&gt; EOF   #先生成一个文件  </span><br><span class="line">[root@jie1 ~]# cat myfile  </span><br><span class="line">hello world  </span><br><span class="line">i am jie  </span><br><span class="line">how are you  </span><br><span class="line">[root@jie1 ~]# name=li  </span><br><span class="line">         #定义一个变量，且给变量赋值  </span><br><span class="line">[root@jie1 ~]# sed -i &quot;s/jie/$name/&quot; myfile  </span><br><span class="line">         #把匹配jie的字符替换成变量的值  </span><br><span class="line">[root@jie1 ~]# cat myfile  </span><br><span class="line">hello world  </span><br><span class="line">i am li  </span><br><span class="line">how are you  </span><br><span class="line">[root@jie1 ~]# sed -i &quot;$a $name&quot; myfile  </span><br><span class="line">          #当sed命令也有默认变量时，在去引用自己定义的变量会出现语法错误  </span><br><span class="line">sed: -e expression #1, char 3: extra characters after command  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;$a &apos;$name&apos;&apos; myfile  </span><br><span class="line">          #在引用自定义的变量时，sed语句必须用单引引住，然后把自定义的变量也用单引号引住  </span><br><span class="line">[root@jie1 ~]# cat myfile  </span><br><span class="line">hello world  </span><br><span class="line">i am li  </span><br><span class="line">how are you  </span><br><span class="line">li  </span><br><span class="line">[root@jie1 ~]#</span><br></pre></td></tr></table></figure></p>
+<p><strong><em>  sed的其它高级使用： </em></strong><br>1）把正在用sed操作的文件的内容写到例外一个文件中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@jie1 ~]# cat test   #sed操作的文件中的内容  </span><br><span class="line">Ethernet  </span><br><span class="line">#BOOTPROTO=&quot;dhcp&quot;  </span><br><span class="line">HWADDR=&quot;00:0C:29:90:79:78&quot;  </span><br><span class="line">ONBOOT=&quot;yes&quot;  </span><br><span class="line">IPADDR=172.16.10.12  </span><br><span class="line">NETMASK=255.255.0.0  </span><br><span class="line">[root@jie1 ~]# sed -i &apos;s/IPADDR/ip/w ip.txt&apos; test  </span><br><span class="line">       #把sed操作的文件内容保存到另外一个文件中，w表示保存，ip.txt文件名  </span><br><span class="line">[root@jie1 ~]# cat ip.txt  #查看新文件的内容  </span><br><span class="line">ip=172.16.10.12  </span><br><span class="line">[root@jie1 ~]#</span><br></pre></td></tr></table></figure></p>
+<p>2）读取一个文件到正在用sed操作的文件中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@jie1 ~]# cat myfile   #文件内容  </span><br><span class="line">hello world  </span><br><span class="line">i am li  </span><br><span class="line">how are you  </span><br><span class="line">li  </span><br><span class="line">[root@jie1 ~]# cat test  #将用sed操作的文件的内容  </span><br><span class="line">Ethernet  </span><br><span class="line">#BOOTPROTO=&quot;dhcp&quot;  </span><br><span class="line">HWADDR=&quot;00:0C:29:90:79:78&quot;  </span><br><span class="line">ONBOOT=&quot;yes&quot;  </span><br><span class="line">IPADDR=172.16.10.12  </span><br><span class="line">NETMASK=255.255.0.0  </span><br><span class="line">[root@jie1 ~]# sed  -i &apos;/Ethernet/r myfile&apos; test  </span><br><span class="line">      #在匹配Ethernet的行，读进来另一个文件的内容，读进来的文件的内容会插入到匹配Ethernet的行后  </span><br><span class="line">[root@jie1 ~]# cat test  #再次查看用sed命令操作的行  </span><br><span class="line">Ethernet  </span><br><span class="line">hello world  </span><br><span class="line">i am li  </span><br><span class="line">how are you  </span><br><span class="line">li  </span><br><span class="line">#BOOTPROTO=&quot;dhcp&quot;  </span><br><span class="line">HWADDR=&quot;00:0C:29:90:79:78&quot;  </span><br><span class="line">ONBOOT=&quot;yes&quot;  </span><br><span class="line">IPADDR=172.16.10.12  </span><br><span class="line">NETMASK=255.255.0.0  </span><br><span class="line">[root@jie1 ~]#</span><br></pre></td></tr></table></figure></p>
+<p><strong>sed的经典例子：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">##1）、处理以下文件内容,将域名取出并进行计数排序,如处理:  </span><br><span class="line">http://www.baidu.com/index.&lt;a target=&quot;_blank&quot; href=&quot;http://www.2cto.com/kf/qianduan/css/&quot; class=&quot;keylink&quot; style=&quot;border:none; padding:0px; margin:0px; color:rgb(51,51,51); text-decoration:none; font-size:14px&quot;&gt;html&lt;/a&gt;  </span><br><span class="line">http://www.baidu.com/1.html  </span><br><span class="line">http://post.baidu.com/index.html  </span><br><span class="line">http://mp3.baidu.com/index.html  </span><br><span class="line">http://www.baidu.com/3.html  </span><br><span class="line">http://post.baidu.com/2.html  </span><br><span class="line">得到如下结果:  </span><br><span class="line">域名的出现的次数 域名  </span><br><span class="line">3 www.baidu.com  </span><br><span class="line">2 post.baidu.com  </span><br><span class="line">1 mp3.baidu.com  </span><br><span class="line">[root@localhost shell]# cat file | sed -e &apos; s/http:\/\///&apos; -e &apos; s/\/.*//&apos; | sort | uniq -c | sort -rn  </span><br><span class="line">3 www.baidu.com  </span><br><span class="line">2 post.baidu.com  </span><br><span class="line">1 mp3.baidu.com  </span><br><span class="line">[root@codfei4 shell]# awk -F/ &apos;&#123;print $3&#125;&apos; file |sort -r|uniq -c|awk &apos;&#123;print $1&quot;\t&quot;,$2&#125;&apos;  </span><br><span class="line">3 www.baidu.com  </span><br><span class="line">2 post.baidu.com  </span><br><span class="line">1 mp3.baidu.com  </span><br><span class="line">##2）、用grep结合sed取出网卡的ip地址  </span><br><span class="line">[root@jie1 ~]# ifconfig | grep -B1 &quot;inet addr&quot; |grep -v &quot;\-\-&quot; |sed -n -e &apos;N;s/eth[0−9].*\n.*addr:[0−9]&#123;1,3&#125;\.[0−9]&#123;1,3&#125;\.[0−9]&#123;1,3&#125;\.[0−9]&#123;1,3&#125;.*/\1 \2/p&apos;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	
+	<div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-----------本文结束<i class="fa fa-paw"></i>感谢阅读-------------</div>
+    
+</div>
+      
+    </div>
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/常用命令/" rel="tag"><i class="fa fa-tag"></i>  常用命令</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/01/docker-基本命令/" rel="next" title="docker 的基本命令">
+                <i class="fa fa-chevron-left"></i> docker 的基本命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDAzMy8yMDU2OA"></div>
+    </div>
+
+  
+  
+  
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Yvan Zhang">
+            
+              <p class="site-author-name" itemprop="name">Yvan Zhang</p>
+              <p class="site-description motion-element" itemprop="description">To Be a Batter Me</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/storyboycn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:252550372@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/3883580582/home?wvr=5" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/bbcfffda0b38" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+		  
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=433103084&auto=1&height=66"></iframe>
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#sed在文件中查询文本的基本方法："><span class="nav-number">1.</span> <span class="nav-text">sed在文件中查询文本的基本方法：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yvan Zhang</span>
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">5.1k</span>
+  
+  
+  -->
+  
+</div>
+
+
+<div class="powered-by">
+<span id="busuanzi_container_site_uv">
+    本站总访问量<span id="busuanzi_value_site_uv"></span>次
+</span>
+
+</div>
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+-->
+
+<div class="theme-info">
+
+  <div class="powered-by"></div>
+
+  <span class="post-count">博客全站共5.1k字</span>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

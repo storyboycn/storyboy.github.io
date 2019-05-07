@@ -92,12 +92,13 @@
 <meta property="og:site_name" content="伯牙绝弦">
 <meta property="og:description" content="1. TCP的几个标志位含义SYN：代表请求创建连接，所以在三次握手中前两次要SYN=1，表示这两次用于建立连接，至于第三次什么用，在疑问三里解答  FIN：表示请求关闭连接，在四次分手时，我们发现FIN发了两遍。这是因为TCP的连接是双向的，所以一次FIN只能关闭一个方向。 ACK：代表确认接受，不管是三次握手还是四次分手，在回应的时候都会加上ACK=1，表示消息接收到了，并且在建立连接以后的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/05/07/TCP的三次握手与四次挥手/TCP2.JPEG">
-<meta property="og:updated_time" content="2019-05-07T15:11:39.081Z">
+<meta property="og:image" content="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1122456373,1994534692&fm=173&s=E57280725777519A06CC11DA0200D0BF&w=543&h=385&img.JPEG">
+<meta property="og:image" content="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2552555385,3789786705&fm=173&s=E570A4721F25508E06CC35DE020010BF&w=564&h=438&img.JPEG">
+<meta property="og:updated_time" content="2019-05-07T15:18:54.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP的三次握手与四次挥手">
 <meta name="twitter:description" content="1. TCP的几个标志位含义SYN：代表请求创建连接，所以在三次握手中前两次要SYN=1，表示这两次用于建立连接，至于第三次什么用，在疑问三里解答  FIN：表示请求关闭连接，在四次分手时，我们发现FIN发了两遍。这是因为TCP的连接是双向的，所以一次FIN只能关闭一个方向。 ACK：代表确认接受，不管是三次握手还是四次分手，在回应的时候都会加上ACK=1，表示消息接收到了，并且在建立连接以后的">
-<meta name="twitter:image" content="http://yoursite.com/2019/05/07/TCP的三次握手与四次挥手/TCP2.JPEG">
+<meta name="twitter:image" content="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1122456373,1994534692&fm=173&s=E57280725777519A06CC11DA0200D0BF&w=543&h=385&img.JPEG">
 
 
 
@@ -417,7 +418,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  854
+                  849
                 </span>
               
 
@@ -464,14 +465,14 @@ seq:序列号，什么意思呢？当发送一个数据时，数据是被拆成�
 初始序列号是随机生成的，这样不一样的数据拆包解包就不会连接错了。（例如：两个数据都被拆成1，2，3和一个数据是1，2，3一个是101，102，103，很明显后者不会连接错误）
 
 ack:这个代表下一个数据包的编号，这也就是为什么第二请求时，ack是seq+1
-</code></pre><h2 id="2-TCP的三次握手过程"><a href="#2-TCP的三次握手过程" class="headerlink" title="2. TCP的三次握手过程"></a>2. TCP的三次握手过程</h2><p> ![tcp三次握手]</p>
+</code></pre><h2 id="2-TCP的三次握手过程"><a href="#2-TCP的三次握手过程" class="headerlink" title="2. TCP的三次握手过程"></a>2. TCP的三次握手过程</h2><p> <img src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1122456373,1994534692&amp;fm=173&amp;s=E57280725777519A06CC11DA0200D0BF&amp;w=543&amp;h=385&amp;img.JPEG" alt="tcp三次握手"></p>
 <ul>
 <li>客户端首先要发送SYN=1，表示要建立连接</li>
 <li>服务端接收到以后，告诉客户端：我接收到了！所以加个ACK=1，就变成了ACK=1,SYN=1</li>
 <li>理论上这时就创建连接成功了，但是要防止一个意外（疑问三），所以客户端需要再发送一个消息给服务端确认下，这时候只需要ACK=1就行了</li>
 <li>三次握手完成</li>
 </ul>
-<h2 id="3-TCP的三次挥手过程"><a href="#3-TCP的三次挥手过程" class="headerlink" title="3. TCP的三次挥手过程"></a>3. TCP的三次挥手过程</h2><p> <img src="/2019/05/07/TCP的三次握手与四次挥手/TCP2.JPEG" alt="tcp四次挥手"></p>
+<h2 id="3-TCP的三次挥手过程"><a href="#3-TCP的三次挥手过程" class="headerlink" title="3. TCP的三次挥手过程"></a>3. TCP的三次挥手过程</h2><p> <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2552555385,3789786705&amp;fm=173&amp;s=E570A4721F25508E06CC35DE020010BF&amp;w=564&amp;h=438&amp;img.JPEG" alt="tcp四次挥手"></p>
 <ol>
 <li>首先客户端请求关闭客户端到服务器端方向的来连接，这时候客户端就要发送一个FIN=1,表示要关闭一个方向的连接（见上面四次挥手的图）</li>
 <li>服务端接收到后需要确认一下的，所以返回了一个ACK=1</li>

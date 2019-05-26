@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[mysql修改密码方法]]></title>
-    <url>%2F2019%2F05%2F10%2Fmysql%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E6%96%B9%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[方法1： 首先登陆mysql 格式:set password for 用户名@localhost = password(&#39;新密码&#39;)； 例如：set password for root@localhost=password(&#39;0301&#39;);123456789101112131415161718[root@10-46-143-76 ~]# mysql -uroot -pEnter password: Welcome to the MySQL monitor. Commands end with ; or \g.Your MySQL connection id is 145Server version: 5.6.44-log MySQL Community Server (GPL)Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.Oracle is a registered trademark of Oracle Corporation and/or itsaffiliates. Other names may be trademarks of their respectiveowners.Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.mysql&gt; set password for root@localhost=password(&apos;0301&apos;);Query OK, 0 rows affected (0.00 sec)mysql&gt; 方法2：用mysqladmin格式:mysqladmin -u用户名 -p旧密码 password 新密码例如:mysqladmin -uroot -p0301 password 1231234[root@10-46-143-76 ~]# mysqladmin -uroot -p password 123Enter password: mysqladmin: connect to server at &apos;localhost&apos; failederror: &apos;Access denied for user &apos;root&apos;@&apos;localhost&apos; (using password: YES)&apos; 方法3:首先登陆mysql1234567891011121314151617181920212223242526272829[root@10-46-143-76 ~]# mysql -uroot -pEnter password: Welcome to the MySQL monitor. Commands end with ; or \g.Your MySQL connection id is 149Server version: 5.6.44-log MySQL Community Server (GPL)Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.Oracle is a registered trademark of Oracle Corporation and/or itsaffiliates. Other names may be trademarks of their respectiveowners.Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.mysql&gt; use mysql;Reading table information for completion of table and column namesYou can turn off this feature to get a quicker startup with -ADatabase changedmysql&gt; update user set password=password=password(&apos;0301&apos;) where user=&apos;root&apos; and host=&apos;localhost&apos;;Query OK, 1 row affected (0.00 sec)Rows matched: 1 Changed: 1 Warnings: 0mysql&gt; flush priveleges;ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;priveleges&apos; at line 1mysql&gt; flush privileges;Query OK, 0 rows affected (0.00 sec)mysql&gt; 方法4： 关闭mysql 输入mysqld –skip-grant-tables 回车。–skip-grant-tables 的意思是启动MySQL服务的时候跳过权限表认证。 重新开启提个窗口 输入mysql回车，如果成功，将出现MySQL提示符 &gt;。 连接权限数据库： use mysql; 改密码：update user set password=password(“123”) where user=”root”;（别忘了最后加分号） 。 刷新权限（必须步骤）：flush privileges; 退出 quit]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
+    <title><![CDATA[zabbix部署]]></title>
+    <url>%2F2019%2F05%2F26%2Fzabbix%E9%83%A8%E7%BD%B2%2F</url>
+    <content type="text"></content>
   </entry>
   <entry>
     <title><![CDATA[mysql常见问题]]></title>
@@ -20,6 +14,17 @@
       </categories>
       <tags>
         <tag>mysql常见问题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[mysql修改密码方法]]></title>
+    <url>%2F2019%2F05%2F10%2Fmysql%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E6%96%B9%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[方法1： 首先登陆mysql 格式:set password for 用户名@localhost = password(&#39;新密码&#39;)； 例如：set password for root@localhost=password(&#39;0301&#39;);123456789101112131415161718[root@10-46-143-76 ~]# mysql -uroot -pEnter password: Welcome to the MySQL monitor. Commands end with ; or \g.Your MySQL connection id is 145Server version: 5.6.44-log MySQL Community Server (GPL)Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.Oracle is a registered trademark of Oracle Corporation and/or itsaffiliates. Other names may be trademarks of their respectiveowners.Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.mysql&gt; set password for root@localhost=password(&apos;0301&apos;);Query OK, 0 rows affected (0.00 sec)mysql&gt; 方法2：用mysqladmin格式:mysqladmin -u用户名 -p旧密码 password 新密码例如:mysqladmin -uroot -p0301 password 1231234[root@10-46-143-76 ~]# mysqladmin -uroot -p password 123Enter password: mysqladmin: connect to server at &apos;localhost&apos; failederror: &apos;Access denied for user &apos;root&apos;@&apos;localhost&apos; (using password: YES)&apos; 方法3:首先登陆mysql1234567891011121314151617181920212223242526272829[root@10-46-143-76 ~]# mysql -uroot -pEnter password: Welcome to the MySQL monitor. Commands end with ; or \g.Your MySQL connection id is 149Server version: 5.6.44-log MySQL Community Server (GPL)Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.Oracle is a registered trademark of Oracle Corporation and/or itsaffiliates. Other names may be trademarks of their respectiveowners.Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.mysql&gt; use mysql;Reading table information for completion of table and column namesYou can turn off this feature to get a quicker startup with -ADatabase changedmysql&gt; update user set password=password=password(&apos;0301&apos;) where user=&apos;root&apos; and host=&apos;localhost&apos;;Query OK, 1 row affected (0.00 sec)Rows matched: 1 Changed: 1 Warnings: 0mysql&gt; flush priveleges;ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;priveleges&apos; at line 1mysql&gt; flush privileges;Query OK, 0 rows affected (0.00 sec)mysql&gt; 方法4： 关闭mysql 输入mysqld –skip-grant-tables 回车。–skip-grant-tables 的意思是启动MySQL服务的时候跳过权限表认证。 重新开启提个窗口 输入mysql回车，如果成功，将出现MySQL提示符 &gt;。 连接权限数据库： use mysql; 改密码：update user set password=password(“123”) where user=”root”;（别忘了最后加分号） 。 刷新权限（必须步骤）：flush privileges; 退出 quit]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>

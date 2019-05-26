@@ -329,7 +329,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/26/zabbix部署/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/26/zabbix部署过程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yvan Zhang">
@@ -348,7 +348,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/05/26/zabbix部署/" itemprop="url">zabbix部署</a></h1>
+                <a class="post-title-link" href="/2019/05/26/zabbix部署过程/" itemprop="url">zabbix部署</a></h1>
         
 
         <div class="post-meta">
@@ -371,169 +371,6 @@
           </span>
 
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                  <span class="post-meta-divider">|</span>
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/26/zabbix部署/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-	
-	<div>
-      
-    </div>
-	
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/10/mysql常见问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yvan Zhang">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="伯牙绝弦">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/10/mysql常见问题/" itemprop="url">mysql常见问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-10T22:32:55+08:00">
-                2019-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
             <span class="post-category">
             
               <span class="post-meta-divider">|</span>
@@ -546,8 +383,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
+                  <a href="/categories/监控/" itemprop="url" rel="index">
+                    <span itemprop="name">监控</span>
                   </a>
                 </span>
 
@@ -579,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  341
+                  210
                 </span>
               
 
@@ -618,11 +455,12 @@
       
         
           
-          1、mysqlbinlog命令报错  报错的原因是my.cnf中配置了default-character-ser=utf8,可以使用参数–no-defaluts参数来解决2、MySQL根据配置文件会限制Server接受的数据包大小。有时候大的插入和更新会受 max_allowed_packet 参数
+          1.安装带有数据库插件的源# rpm -i https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm
+2.安装Zabbix Server和Zabbix Agent# yum install
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/05/10/mysql常见问题/#more" rel="contents">
+            <a class="btn" href="/2019/05/26/zabbix部署过程/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -808,6 +646,191 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/05/10/mysql修改密码方法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	
+	<div>
+      
+    </div>
+	
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/10/mysql常见问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yvan Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="伯牙绝弦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/10/mysql常见问题/" itemprop="url">mysql常见问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-10T22:32:55+08:00">
+                2019-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  341
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          1、mysqlbinlog命令报错  报错的原因是my.cnf中配置了default-character-ser=utf8,可以使用参数–no-defaluts参数来解决2、MySQL根据配置文件会限制Server接受的数据包大小。有时候大的插入和更新会受 max_allowed_packet 参数
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/10/mysql常见问题/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1666,7 +1689,7 @@ docker rmi $(docker images -q | awk &#39;/^&lt;none&gt;/ {print $3}&#39
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1677,7 +1700,7 @@ docker rmi $(docker images -q | awk &#39;/^&lt;none&gt;/ {print $3}&#39
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1766,7 +1789,7 @@ docker rmi $(docker images -q | awk &#39;/^&lt;none&gt;/ {print $3}&#39
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">12.9k</span>
+    <span title="Site words total count">13.1k</span>
   
   
   -->
@@ -1799,7 +1822,7 @@ docker rmi $(docker images -q | awk &#39;/^&lt;none&gt;/ {print $3}&#39
 
   <div class="powered-by"></div>
 
-  <span class="post-count">博客全站共12.9k字</span>
+  <span class="post-count">博客全站共13.1k字</span>
 
 
         

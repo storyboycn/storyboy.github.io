@@ -2,18 +2,13 @@
 <search>
   <entry>
     <title><![CDATA[zabbix部署]]></title>
-    <url>%2F2019%2F05%2F26%2Fzabbix%E9%83%A8%E7%BD%B2%2F</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
-    <title><![CDATA[mysql常见问题]]></title>
-    <url>%2F2019%2F05%2F10%2Fmysql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[1、mysqlbinlog命令报错 报错的原因是my.cnf中配置了default-character-ser=utf8,可以使用参数–no-defaluts参数来解决2、MySQL根据配置文件会限制Server接受的数据包大小。有时候大的插入和更新会受 max_allowed_packet 参数限制，导致大数据写入或者更新失败。show VARIABLES like &#39;max_allowed_packet&#39;;123456789mysql&gt; show VARIABLES like &apos;max_allowed_packet&apos;;+--------------------+---------+| Variable_name | Value |+--------------------+---------+| max_allowed_packet | 4194304 |+--------------------+---------+1 row in set (0.00 sec)mysql&gt; 3、查看数据目录show variables like &#39;%datadir%&#39;;123456789mysql&gt; show variables like &apos;%datadir%&apos;;+---------------+-----------------+| Variable_name | Value |+---------------+-----------------+| datadir | /var/lib/mysql/ |+---------------+-----------------+1 row in set (0.00 sec)mysql&gt; 4、查看binlog相关信息show variables like &#39;%log_bin%&#39;1234567891011121314mysql&gt; show variables like &apos;%log_bin%&apos;;+---------------------------------+--------------------------------+| Variable_name | Value |+---------------------------------+--------------------------------+| log_bin | ON || log_bin_basename | /var/lib/mysql/mysql-bin || log_bin_index | /var/lib/mysql/mysql-bin.index || log_bin_trust_function_creators | OFF || log_bin_use_v1_row_events | OFF || sql_log_bin | ON |+---------------------------------+--------------------------------+6 rows in set (0.00 sec)mysql&gt; 5、show processlist 是显示用户正在运行的线程，需要注意的是，除了 root 用户能看到所有正在运行的线程外，其他用户都只能看到自己正在运行的线程，看不到其它用户正在运行的线程。除非单独个这个用户赋予了PROCESS 权限。root用户，可以看到全部线程运行情况普通的activiti用户只能看到自己的123456789mysql&gt; show processlist;+-----+------+-----------+------+---------+------+-------+------------------+| Id | User | Host | db | Command | Time | State | Info |+-----+------+-----------+------+---------+------+-------+------------------+| 130 | root | localhost | NULL | Query | 0 | init | show processlist |+-----+------+-----------+------+---------+------+-------+------------------+1 row in set (0.00 sec)mysql&gt;]]></content>
+    <url>%2F2019%2F05%2F26%2Fzabbix%E9%83%A8%E7%BD%B2%E8%BF%87%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[1.安装带有数据库插件的源# rpm -i https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm 2.安装Zabbix Server和Zabbix Agent# yum install zabbix-server-mysql zabbix-web-mysql zabbix-agent 3.配置Zabbix Service数据库(数据库还是需要自己安装，zabbix-server-mysql和zabbix-web-mysql只是链接数据库的插件) mysql安装具体看上篇博文 1234mysql -uroot -ppasswordcreate database zabbix character set utf8 collate utf8_bin;grant all privileges on zabbix.* to zabbix@localhost identified by &apos;password&apos;;quit; 导入数据库 zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p zabbix 4.配置Zabbix Server并启动服务 修改/etc/zabbix/zabbix_server.conf中的DBPassword配置项，修改成数据库中填写的password； 修改/etc/httpd/conf.d/zabbix.conf中的php_value date.timezone Asia/Shanghai时区选项 启动服务 # systemctl restart zabbix-server zabbix-agent httpd # systemctl enable zabbix-server zabbix-agent httpd 5、登陆配置]]></content>
       <categories>
-        <category>mysql</category>
+        <category>监控</category>
       </categories>
       <tags>
-        <tag>mysql常见问题</tag>
+        <tag>zabbix</tag>
       </tags>
   </entry>
   <entry>
@@ -25,6 +20,17 @@
       </categories>
       <tags>
         <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[mysql常见问题]]></title>
+    <url>%2F2019%2F05%2F10%2Fmysql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[1、mysqlbinlog命令报错 报错的原因是my.cnf中配置了default-character-ser=utf8,可以使用参数–no-defaluts参数来解决2、MySQL根据配置文件会限制Server接受的数据包大小。有时候大的插入和更新会受 max_allowed_packet 参数限制，导致大数据写入或者更新失败。show VARIABLES like &#39;max_allowed_packet&#39;;123456789mysql&gt; show VARIABLES like &apos;max_allowed_packet&apos;;+--------------------+---------+| Variable_name | Value |+--------------------+---------+| max_allowed_packet | 4194304 |+--------------------+---------+1 row in set (0.00 sec)mysql&gt; 3、查看数据目录show variables like &#39;%datadir%&#39;;123456789mysql&gt; show variables like &apos;%datadir%&apos;;+---------------+-----------------+| Variable_name | Value |+---------------+-----------------+| datadir | /var/lib/mysql/ |+---------------+-----------------+1 row in set (0.00 sec)mysql&gt; 4、查看binlog相关信息show variables like &#39;%log_bin%&#39;1234567891011121314mysql&gt; show variables like &apos;%log_bin%&apos;;+---------------------------------+--------------------------------+| Variable_name | Value |+---------------------------------+--------------------------------+| log_bin | ON || log_bin_basename | /var/lib/mysql/mysql-bin || log_bin_index | /var/lib/mysql/mysql-bin.index || log_bin_trust_function_creators | OFF || log_bin_use_v1_row_events | OFF || sql_log_bin | ON |+---------------------------------+--------------------------------+6 rows in set (0.00 sec)mysql&gt; 5、show processlist 是显示用户正在运行的线程，需要注意的是，除了 root 用户能看到所有正在运行的线程外，其他用户都只能看到自己正在运行的线程，看不到其它用户正在运行的线程。除非单独个这个用户赋予了PROCESS 权限。root用户，可以看到全部线程运行情况普通的activiti用户只能看到自己的123456789mysql&gt; show processlist;+-----+------+-----------+------+---------+------+-------+------------------+| Id | User | Host | db | Command | Time | State | Info |+-----+------+-----------+------+---------+------+-------+------------------+| 130 | root | localhost | NULL | Query | 0 | init | show processlist |+-----+------+-----------+------+---------+------+-------+------------------+1 row in set (0.00 sec)mysql&gt;]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql常见问题</tag>
       </tags>
   </entry>
   <entry>

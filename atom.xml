@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-05-26T02:38:07.081Z</updated>
+  <updated>2019-05-26T03:24:54.804Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -18,40 +18,26 @@
   
   <entry>
     <title>zabbix部署</title>
-    <link href="http://yoursite.com/2019/05/26/zabbix%E9%83%A8%E7%BD%B2/"/>
-    <id>http://yoursite.com/2019/05/26/zabbix部署/</id>
+    <link href="http://yoursite.com/2019/05/26/zabbix%E9%83%A8%E7%BD%B2%E8%BF%87%E7%A8%8B/"/>
+    <id>http://yoursite.com/2019/05/26/zabbix部署过程/</id>
     <published>2019-05-26T02:38:07.000Z</published>
-    <updated>2019-05-26T02:38:07.081Z</updated>
+    <updated>2019-05-26T03:24:54.804Z</updated>
     
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>mysql常见问题</title>
-    <link href="http://yoursite.com/2019/05/10/mysql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2019/05/10/mysql常见问题/</id>
-    <published>2019-05-10T14:32:55.000Z</published>
-    <updated>2019-05-10T14:56:32.717Z</updated>
-    
-    <content type="html"><![CDATA[<p>1、mysqlbinlog命令报错  报错的原因是my.cnf中配置了default-character-ser=utf8,可以使用参数–no-defaluts参数来解决<br>2、MySQL根据配置文件会限制Server接受的数据包大小。有时候大的插入和更新会受 max_allowed_packet 参数限制，导致大数据写入或者更新失败。<br><code>show VARIABLES like &#39;max_allowed_packet&#39;;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like &apos;max_allowed_packet&apos;;</span><br><span class="line">+--------------------+---------+</span><br><span class="line">| Variable_name      | Value   |</span><br><span class="line">+--------------------+---------+</span><br><span class="line">| max_allowed_packet | 4194304 |</span><br><span class="line">+--------------------+---------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p><p>3、查看数据目录<br><code>show variables like &#39;%datadir%&#39;;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &apos;%datadir%&apos;;</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| Variable_name | Value           |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| datadir       | /var/lib/mysql/ |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p><p>4、查看binlog相关信息<br><code>show variables like &#39;%log_bin%&#39;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &apos;%log_bin%&apos;;</span><br><span class="line">+---------------------------------+--------------------------------+</span><br><span class="line">| Variable_name                   | Value                          |</span><br><span class="line">+---------------------------------+--------------------------------+</span><br><span class="line">| log_bin                         | ON                             |</span><br><span class="line">| log_bin_basename                | /var/lib/mysql/mysql-bin       |</span><br><span class="line">| log_bin_index                   | /var/lib/mysql/mysql-bin.index |</span><br><span class="line">| log_bin_trust_function_creators | OFF                            |</span><br><span class="line">| log_bin_use_v1_row_events       | OFF                            |</span><br><span class="line">| sql_log_bin                     | ON                             |</span><br><span class="line">+---------------------------------+--------------------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p><p>5、show processlist 是显示用户正在运行的线程，需要注意的是，除了 root 用户能看到所有正在运行的线程外，其他用户都只能看到自己正在运行的线程，看不到其它用户正在运行的线程。除非单独个这个用户赋予了PROCESS 权限。root用户，可以看到全部线程运行情况普通的activiti用户只能看到自己的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show processlist;</span><br><span class="line">+-----+------+-----------+------+---------+------+-------+------------------+</span><br><span class="line">| Id  | User | Host      | db   | Command | Time | State | Info             |</span><br><span class="line">+-----+------+-----------+------+---------+------+-------+------------------+</span><br><span class="line">| 130 | root | localhost | NULL | Query   |    0 | init  | show processlist |</span><br><span class="line">+-----+------+-----------+------+---------+------+-------+------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p>]]></content>
+    <content type="html"><![CDATA[<h3 id="1-安装带有数据库插件的源"><a href="#1-安装带有数据库插件的源" class="headerlink" title="1.安装带有数据库插件的源"></a>1.安装带有数据库插件的源</h3><pre><code># rpm -i https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm</code></pre><h3 id="2-安装Zabbix-Server和Zabbix-Agent"><a href="#2-安装Zabbix-Server和Zabbix-Agent" class="headerlink" title="2.安装Zabbix Server和Zabbix Agent"></a>2.安装Zabbix Server和Zabbix Agent</h3><pre><code># yum install zabbix-server-mysql zabbix-web-mysql zabbix-agent</code></pre><h3 id="3-配置Zabbix-Service数据库-数据库还是需要自己安装，zabbix-server-mysql和zabbix-web-mysql只是链接数据库的插件"><a href="#3-配置Zabbix-Service数据库-数据库还是需要自己安装，zabbix-server-mysql和zabbix-web-mysql只是链接数据库的插件" class="headerlink" title="3.配置Zabbix Service数据库(数据库还是需要自己安装，zabbix-server-mysql和zabbix-web-mysql只是链接数据库的插件)"></a>3.配置Zabbix Service数据库(数据库还是需要自己安装，zabbix-server-mysql和zabbix-web-mysql只是链接数据库的插件)</h3><ul><li><p>mysql安装具体看上篇博文</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -ppassword</span><br><span class="line">create database zabbix character set utf8 collate utf8_bin;</span><br><span class="line">grant all privileges on zabbix.* to zabbix@localhost identified by &apos;password&apos;;</span><br><span class="line">quit;</span><br></pre></td></tr></table></figure></li><li><p>导入数据库</p><p> <code>zcat  /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p zabbix</code></p></li></ul><h3 id="4-配置Zabbix-Server并启动服务"><a href="#4-配置Zabbix-Server并启动服务" class="headerlink" title="4.配置Zabbix Server并启动服务"></a>4.配置Zabbix Server并启动服务</h3><ul><li><p>修改/etc/zabbix/zabbix_server.conf中的DBPassword配置项，修改成数据库中填写的password；</p></li><li><p>修改/etc/httpd/conf.d/zabbix.conf中的php_value date.timezone Asia/Shanghai时区选项</p></li><li><p>启动服务</p><p> <code># systemctl restart zabbix-server zabbix-agent httpd</code></p><p><code># systemctl enable zabbix-server zabbix-agent httpd</code></p><h3 id="5、登陆配置"><a href="#5、登陆配置" class="headerlink" title="5、登陆配置"></a>5、登陆配置</h3></li></ul>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;1、mysqlbinlog命令报错  报错的原因是my.cnf中配置了default-character-ser=utf8,可以使用参数–no-defaluts参数来解决&lt;br&gt;2、MySQL根据配置文件会限制Server接受的数据包大小。有时候大的插入和更新会受 max_
+        &lt;h3 id=&quot;1-安装带有数据库插件的源&quot;&gt;&lt;a href=&quot;#1-安装带有数据库插件的源&quot; class=&quot;headerlink&quot; title=&quot;1.安装带有数据库插件的源&quot;&gt;&lt;/a&gt;1.安装带有数据库插件的源&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# rpm -i https://r
       
     
     </summary>
     
-      <category term="mysql" scheme="http://yoursite.com/categories/mysql/"/>
+      <category term="监控" scheme="http://yoursite.com/categories/%E7%9B%91%E6%8E%A7/"/>
     
     
-      <category term="mysql常见问题" scheme="http://yoursite.com/tags/mysql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
+      <category term="zabbix" scheme="http://yoursite.com/tags/zabbix/"/>
     
   </entry>
   
@@ -77,6 +63,31 @@
     
     
       <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mysql常见问题</title>
+    <link href="http://yoursite.com/2019/05/10/mysql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2019/05/10/mysql常见问题/</id>
+    <published>2019-05-10T14:32:55.000Z</published>
+    <updated>2019-05-10T14:56:32.717Z</updated>
+    
+    <content type="html"><![CDATA[<p>1、mysqlbinlog命令报错  报错的原因是my.cnf中配置了default-character-ser=utf8,可以使用参数–no-defaluts参数来解决<br>2、MySQL根据配置文件会限制Server接受的数据包大小。有时候大的插入和更新会受 max_allowed_packet 参数限制，导致大数据写入或者更新失败。<br><code>show VARIABLES like &#39;max_allowed_packet&#39;;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like &apos;max_allowed_packet&apos;;</span><br><span class="line">+--------------------+---------+</span><br><span class="line">| Variable_name      | Value   |</span><br><span class="line">+--------------------+---------+</span><br><span class="line">| max_allowed_packet | 4194304 |</span><br><span class="line">+--------------------+---------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p><p>3、查看数据目录<br><code>show variables like &#39;%datadir%&#39;;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &apos;%datadir%&apos;;</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| Variable_name | Value           |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| datadir       | /var/lib/mysql/ |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p><p>4、查看binlog相关信息<br><code>show variables like &#39;%log_bin%&#39;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &apos;%log_bin%&apos;;</span><br><span class="line">+---------------------------------+--------------------------------+</span><br><span class="line">| Variable_name                   | Value                          |</span><br><span class="line">+---------------------------------+--------------------------------+</span><br><span class="line">| log_bin                         | ON                             |</span><br><span class="line">| log_bin_basename                | /var/lib/mysql/mysql-bin       |</span><br><span class="line">| log_bin_index                   | /var/lib/mysql/mysql-bin.index |</span><br><span class="line">| log_bin_trust_function_creators | OFF                            |</span><br><span class="line">| log_bin_use_v1_row_events       | OFF                            |</span><br><span class="line">| sql_log_bin                     | ON                             |</span><br><span class="line">+---------------------------------+--------------------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p><p>5、show processlist 是显示用户正在运行的线程，需要注意的是，除了 root 用户能看到所有正在运行的线程外，其他用户都只能看到自己正在运行的线程，看不到其它用户正在运行的线程。除非单独个这个用户赋予了PROCESS 权限。root用户，可以看到全部线程运行情况普通的activiti用户只能看到自己的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show processlist;</span><br><span class="line">+-----+------+-----------+------+---------+------+-------+------------------+</span><br><span class="line">| Id  | User | Host      | db   | Command | Time | State | Info             |</span><br><span class="line">+-----+------+-----------+------+---------+------+-------+------------------+</span><br><span class="line">| 130 | root | localhost | NULL | Query   |    0 | init  | show processlist |</span><br><span class="line">+-----+------+-----------+------+---------+------+-------+------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1、mysqlbinlog命令报错  报错的原因是my.cnf中配置了default-character-ser=utf8,可以使用参数–no-defaluts参数来解决&lt;br&gt;2、MySQL根据配置文件会限制Server接受的数据包大小。有时候大的插入和更新会受 max_
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="http://yoursite.com/categories/mysql/"/>
+    
+    
+      <category term="mysql常见问题" scheme="http://yoursite.com/tags/mysql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
     
   </entry>
   
